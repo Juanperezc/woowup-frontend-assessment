@@ -31,7 +31,7 @@ This front-end project is built with [Next.js](https://nextjs.org/), and is desi
 First, clone the repository and switch to the project directory:
 
 ```bash
-git clone https://github.com/your-repository/woowup-frontend-assessment.git
+git clone https://github.com/Juanperezc/woowup-frontend-assessment/
 cd woowup-frontend-assessment
 ```
 
@@ -40,6 +40,16 @@ Install the dependencies:
 ```bash
 npm install
 ```
+
+### Environment Setup
+
+Copy `.env.example` to `.env`:
+
+For UNIX: `cp .env.example .env`
+  
+For Windows: `copy .env.example .env`
+
+Fill in the `.env` variables as per your configuration.
 
 ### Running the Development Server
 
@@ -56,3 +66,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme).
 
 For more details, check out the [Next.js deployment documentation](https://nextjs.org/docs/deployment).
+
+---
+
+That should cover everything. Let me know if you need more information.
