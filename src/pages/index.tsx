@@ -7,7 +7,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import TiptapControlledComponent from "@/components/Tiptap/Tiptap";
 import { FormControl, FormHelperText, FormLabel } from "@mui/material";
-import { ReCaptcha } from "next-recaptcha-v3";
+import { useReCaptcha } from "next-recaptcha-v3";
 import MailService from "@/services/MailService";
 import sweetAlert from "@/utils/sweetAlert";
 
@@ -22,7 +22,7 @@ const schema = yup.object().shape({
 });
 
 const IndexPage = () => {
-  const [token, setToken] = React.useState<string>("");
+  const { executeRecaptcha } = useReCaptcha();
   const {
     control,
     handleSubmit,
@@ -32,19 +32,18 @@ const IndexPage = () => {
   });
 
   const onSubmit = async (data: any) => {
-    console.log(data);
+    const token = await executeRecaptcha("form_submit");
     try {
-        sweetAlert.loading("Sending email");
+      sweetAlert.loading("Sending email");
       await MailService.sendMailFailOver(
         data.title,
         data.text,
         data.emails,
         token
       );
-        sweetAlert.success("Success", "Email sent successfully");
+      sweetAlert.success("Success", "Email sent successfully");
     } catch (e) {
       sweetAlert.error("Error", "An error has ocurred, please try again later");
-  
     }
   };
 
@@ -77,9 +76,10 @@ const IndexPage = () => {
                   onChange={(_, newValue) => field.onChange(newValue)}
                 />
               )}
-             
             />
-             <FormHelperText>Press enter in order to add emails into the list</FormHelperText>
+            <FormHelperText>
+              Press enter in order to add emails into the list
+            </FormHelperText>
           </FormControl>
           <FormControl fullWidth>
             <Controller
@@ -107,9 +107,7 @@ const IndexPage = () => {
               error={errors.text?.message}
             />
           </FormControl>
-          <FormControl fullWidth>
-            <ReCaptcha onValidate={setToken} action="page_view" />
-          </FormControl>
+
           <div className="mt-2">
             <Button
               variant="contained"
